@@ -1,0 +1,9 @@
+/target
+/test-results
+.donotdelete/
+test-results/
+.vscode
+node_modules/
+TypeScript/
+reports/
+.history/
