@@ -1,0 +1,18 @@
+{
+    "perfectoServer": {
+        "host": "",
+        "username": "",
+        "password": "",
+        "https": true
+    },
+    "desiredCapabilities": {
+        "platformName": "Windows",
+        "platformVersion": "",
+        "deviceName": "WindowsPC",
+        "app": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"
+    },
+    "type": "automaticServer",
+    "host": "localhost",
+    "port": "4723",
+    "path": "/wd/hub"
+}
