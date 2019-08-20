@@ -12,7 +12,7 @@
         },
         {
             "command": "Clear",
-            "element": "test",
+            "element": "email",
             "eArray": [
                 [
                     "id=identifierId",
@@ -48,6 +48,10 @@
                 ],
                 [
                     "test",
+                    "key"
+                ],
+                [
+                    "email",
                     "key"
                 ]
             ],
@@ -60,7 +64,7 @@
         },
         {
             "command": "Type",
-            "element": "test",
+            "element": "email",
             "eArray": [
                 [
                     "id=identifierId",
@@ -97,6 +101,10 @@
                 [
                     "test",
                     "key"
+                ],
+                [
+                    "email",
+                    "key"
                 ]
             ],
             "input": "demoqas2019@gmail.com",
@@ -107,7 +115,7 @@
         },
         {
             "command": "Click",
-            "element": "test1",
+            "element": "text_1",
             "eArray": [
                 [
                     "xpath=//div[@id='view_container']/div/div/div[2]/div/div",
@@ -132,6 +140,10 @@
                 [
                     "test1",
                     "key"
+                ],
+                [
+                    "text_1",
+                    "key"
                 ]
             ],
             "input": "",
@@ -143,7 +155,7 @@
         },
         {
             "command": "Verify Value",
-            "element": "test",
+            "element": "email",
             "eArray": [
                 [
                     "id=identifierId",
@@ -179,6 +191,10 @@
                 ],
                 [
                     "test",
+                    "key"
+                ],
+                [
+                    "email",
                     "key"
                 ]
             ],
@@ -226,7 +242,7 @@
         },
         {
             "command": "Clear",
-            "element": "test2",
+            "element": "password",
             "eArray": [
                 [
                     "name=password",
@@ -262,6 +278,10 @@
                 ],
                 [
                     "test2",
+                    "key"
+                ],
+                [
+                    "password",
                     "key"
                 ]
             ],
@@ -274,7 +294,7 @@
         },
         {
             "command": "Type",
-            "element": "test2",
+            "element": "password",
             "eArray": [
                 [
                     "name=password",
@@ -311,6 +331,10 @@
                 [
                     "test2",
                     "key"
+                ],
+                [
+                    "password",
+                    "key"
                 ]
             ],
             "input": "<Password>",
@@ -321,7 +345,7 @@
         },
         {
             "command": "Click",
-            "element": "test3",
+            "element": "text_2",
             "eArray": [
                 [
                     "xpath=//div[@id='view_container']/div/div/div[2]/div",
@@ -346,6 +370,10 @@
                 [
                     "test3",
                     "key"
+                ],
+                [
+                    "text_2",
+                    "key"
                 ]
             ],
             "input": "",
@@ -357,7 +385,7 @@
         },
         {
             "command": "Verify Value",
-            "element": "test2",
+            "element": "password",
             "eArray": [
                 [
                     "name=password",
@@ -393,6 +421,10 @@
                 ],
                 [
                     "test2",
+                    "key"
+                ],
+                [
+                    "password",
                     "key"
                 ]
             ],
@@ -473,5 +505,6 @@
             "Password": "QAS@2019"
         }
     ],
+    "isTCValid": true,
     "executionStatus": "NotRun"
 }

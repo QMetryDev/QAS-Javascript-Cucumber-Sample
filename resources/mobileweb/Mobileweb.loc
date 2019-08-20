@@ -1,6 +1,6 @@
-test={"locator":"id=identifierId","desc":"identifierId email"}
-test1={"locator":"xpath=//div[@id='view_container']/div/div/div[2]/div/div","desc":"Text DIV111"}
 span.span1111_2={"locator":"xpath=//div[@id='identifierNext']/span","desc":"Text SPAN1111"}
-test2={"locator":"name=password","desc":"QAS@2019 password"}
-test3={"locator":"xpath=//div[@id='view_container']/div/div/div[2]/div","desc":"Text DIV111"}
+text_2={"locator":"xpath=//div[@id='view_container']/div/div/div[2]/div","desc":"Text DIV111"}
 span.span1111_1_1={"locator":"xpath=//div[@id='passwordNext']/span","desc":"Text SPAN1111"}
+email={"locator":"id=identifierId","desc":"identifierId email"}
+text_1={"locator":"xpath=//div[@id='view_container']/div/div/div[2]/div/div","desc":"Text DIV111"}
+password={"locator":"name=password","desc":"QAS@2019 password"}
