@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const ConfigurationManager_1 = require("./ConfigurationManager");
+const configurationmanager_1 = require("./configurationmanager");
 const fs = require('fs');
 const zip = require('zip-folder');
-let integrationProperties = ConfigurationManager_1.ConfigurationManager.getIntegrationBundle();
+let integrationProperties = configurationmanager_1.ConfigurationManager.getBundle();
 exports.QMETRY_ENABLED = integrationProperties.get('automation.qmetry.enabled') !== null ? integrationProperties.get('automation.qmetry.enabled') : '';
 exports.INTEGRATION_TYPE = integrationProperties.get('automation.qmetry.type') !== null ? integrationProperties.get('automation.qmetry.type') : '';
 exports.ON_PREMISE = integrationProperties.get('automation.qmetry.onpremise') !== null ? integrationProperties.get('automation.qmetry.onpremise') : '';
@@ -21,7 +21,7 @@ exports.SPRINT = integrationProperties.get('automation.qmetry.sprint') !== null 
 exports.PLATFORM = integrationProperties.get('automation.qmetry.platform') !== null ? integrationProperties.get('automation.qmetry.platform') : '';
 exports.COMMENT = integrationProperties.get('automation.qmetry.comment') !== null ? integrationProperties.get('automation.qmetry.comment') : '';
 exports.TEST_RUN_KEY = integrationProperties.get('automation.qmetry.testrunkey') !== null ? integrationProperties.get('automation.qmetry.testrunkey') : '';
-exports.TEST_ASSET_HIERARCHY = integrationProperties.get('automation.qmetry.testassethierarchy') !== null && (integrationProperties.get('automation.qmetry.testassethierarchy')) !==0 ? integrationProperties.get('automation.qmetry.testassethierarchy') : 'TestCase-TestStep';
+exports.TEST_ASSET_HIERARCHY = integrationProperties.get('automation.qmetry.testassethierarchy') !== null && (integrationProperties.get('automation.qmetry.testassethierarchy')) !== 0 ? integrationProperties.get('automation.qmetry.testassethierarchy') : 'TestCase-TestStep';
 exports.JIRA_FIELS = integrationProperties.get('automation.qmetry.jirafields') !== null ? integrationProperties.get('automation.qmetry.jirafields') : '';
 exports.DEBUG = integrationProperties.get('automation.qmetry.debug') !== null ? integrationProperties.get('automation.qmetry.debug') : '';
 exports.ATTACH_FILE = integrationProperties.get('automation.qmetry.attachfile') !== null ? integrationProperties.get('automation.qmetry.attachfile') : '';
@@ -32,9 +32,26 @@ exports.TEST_SUITE_ID = integrationProperties.get('automation.qmetry.testsuiteid
 exports.PROJECT_ID = integrationProperties.get('automation.qmetry.projectid') !== null ? integrationProperties.get('automation.qmetry.projectid') : '';
 exports.REALEASE_ID = integrationProperties.get('automation.qmetry.releaseid') !== null ? integrationProperties.get('automation.qmetry.releaseid') : '';
 exports.BUILD_ID = integrationProperties.get('automation.qmetry.buildid') !== null ? integrationProperties.get('automation.qmetry.buildid') : '';
+exports.TEST_SUITE_NAME = integrationProperties.get('automation.qmetry.testsuitename') !== null ? integrationProperties.get('automation.qmetry.testsuitename') : '';
 exports.FORMAT = integrationProperties.get('automation.qmetry.format') !== null ? integrationProperties.get('automation.qmetry.format') : '';
 exports.ENTITY_TYPE = integrationProperties.get('automation.qmetry.entityType') !== null ? integrationProperties.get('automation.qmetry.entityType') : 'CUCUMBER';
-exports.TEST_SUITE_NAME = integrationProperties.get('automation.qmetry.testsuitename') !== null ? integrationProperties.get('automation.qmetry.testsuitename') : '';
+exports.TEST_CYCLE_TO_REUSE = integrationProperties.get('automation.qmetry.testCycleToReuse') !== null ? integrationProperties.get('automation.qmetry.testCycleToReuse') : '';
+exports.ENVIRONMENT = integrationProperties.get('automation.qmetry.environment') !== null ? integrationProperties.get('automation.qmetry.environment') : '';
+exports.BUILD = integrationProperties.get('automation.qmetry.build') !== null ? integrationProperties.get('automation.qmetry.build') : '';
+exports.TEST_CYCLE_LABELS = integrationProperties.get('automation.qmetry.testcycle.labels') !== null ? integrationProperties.get('automation.qmetry.testcycle.labels') : '';
+exports.TEST_CYCLE_COMPONENTS = integrationProperties.get('automation.qmetry.testcycle.components') !== null ? integrationProperties.get('automation.qmetry.testcycle.components') : '';
+exports.TEST_CYCLE_PRIORITY = integrationProperties.get('automation.qmetry.testcycle.priority') !== null ? integrationProperties.get('automation.qmetry.testcycle.priority') : '';
+exports.TEST_CYCLE_STATUS = integrationProperties.get('automation.qmetry.testcycle.status') !== null ? integrationProperties.get('automation.qmetry.testcycle.status') : '';
+exports.TEST_CYCLE_SPRINTID = integrationProperties.get('automation.qmetry.testcycle.sprintId') !== null ? integrationProperties.get('automation.qmetry.testcycle.sprintId') : '';
+exports.TEST_CYCLE_FIXVERSIONID = integrationProperties.get('automation.qmetry.testcycle.fixVersionId') !== null ? integrationProperties.get('automation.qmetry.testcycle.fixVersionId') : '';
+exports.TEST_CYCLE_SUMMARY = integrationProperties.get('automation.qmetry.testcycle.summary') !== null ? integrationProperties.get('automation.qmetry.testcycle.summary') : '';
+exports.TEST_CASE_LABELS = integrationProperties.get('automation.qmetry.testcase.labels') !== null ? integrationProperties.get('automation.qmetry.testcase.labels') : '';
+exports.TEST_CASE_COMPONENTS = integrationProperties.get('automation.qmetry.testcase.components') !== null ? integrationProperties.get('automation.qmetry.testcase.components') : '';
+exports.TEST_CASE_PRIORITY = integrationProperties.get('automation.qmetry.testcase.priority') !== null ? integrationProperties.get('automation.qmetry.testcase.priority') : '';
+exports.TEST_CASE_STATUS = integrationProperties.get('automation.qmetry.testcase.status') !== null ? integrationProperties.get('automation.qmetry.tc_status') : '';
+exports.TEST_CASE_SPRINTID = integrationProperties.get('automation.qmetry.testcase.sprintId') !== null ? integrationProperties.get('automation.qmetry.testcase.sprintId') : '';
+exports.TEST_CASE_FIXVERSIONID = integrationProperties.get('automation.qmetry.testcase.fixVersionId') !== null ? integrationProperties.get('automation.qmetry.testcase.fixVersionId') : '';
+
 exports.testResultsPath = './test-results/';
 exports.latestCreatedZip = '';
 function ZipMaker(callback) {
