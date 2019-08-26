@@ -5,14 +5,14 @@ const fs = require("fs-extra");
 const path = require("path");
 const request = require("request");
 const utils_1 = require("./utils");
-const ConfigurationManager_1 = require("./ConfigurationManager");
+const configurationManager_1 = require("./configurationManager");
 exports.extraFieldMap = {};
-exports.integrationProperties = ConfigurationManager_1.ConfigurationManager.getIntegrationBundle();
+exports.integrationProperties = configurationManager_1.ConfigurationManager.getBundle();
 function uploadResults(filePath, callback) {
-    console.log("<<<<<<<<<<<<<<<<<<<<< Uploading Results >>>>>>>>>>>>>>>>");
     var option_new;
     var start = new Date().getTime();
-    if (!utils_1.ON_PREMISE && utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j") {
+    if (!utils_1.ON_PREMISE &&
+        utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j") {
         // FOR QTM4J CLOUD
         option_new = {
             method: "POST",
@@ -23,27 +23,68 @@ function uploadResults(filePath, callback) {
             body: {
                 apiKey: utils_1.API_KEY,
                 format: 'qas/json',
-                isZip:true
+                isZip: true
             },
             json: true
         };
-        option_new["body"]["testAssetHierarchy"] = utils_1.TEST_ASSET_HIERARCHY;
-        option_new["body"]["testCaseUpdateLevel"] = utils_1.TEST_CASE_UPDATE_LEVEL;
+        option_new["body"]["testAssetHierarchy"] = utils_1.TEST_ASSET_HIERARCHY;//"TestCase-TestStep";
+        option_new["body"]["testCaseUpdateLevel"] = utils_1.TEST_CASE_UPDATE_LEVEL;//1;
         // delete extraFieldMap['testRunName'];
         option_new = getExtraFieldMap(option_new);
-        console.log("Requesting With:::" +
+        console.log("Uploading results With:::" +
             utils_1.INTEGRATION_TYPE +
             "::Cloud" +
             JSON.stringify(option_new));
         try {
             // url will not get for qtm4j cloud
             request(option_new, function requestTO(error, response, body) {
-                console.log("Upload Result Response::QTM4J::Cloud:::" + JSON.stringify(response));
                 if (response.body.isSuccess) {
                     doCloudCall(filePath, response, callback);
                 }
                 else {
-                    callback({ success: false, errMessage: response.body.errorMessage });
+                    callback({
+                        success: false,
+                        errMessage: response.body.errorMessage
+                    });
+                }
+            });
+        }
+        catch (e) {
+            callback({ success: false, errMessage: e });
+        }
+    } else if (!utils_1.ON_PREMISE &&
+        utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j4x") {
+        // FOR QTM4J CLOUD
+        option_new = {
+            method: "POST",
+            url: utils_1.URL,
+            headers: {
+                "Content-Type": "application/json",
+                apiKey: utils_1.API_KEY
+            },
+            body: {
+                format: 'qaf',
+                isZip: true
+            },
+            json: true
+        };
+        // delete extraFieldMap['testRunName'];
+        option_new = getExtraFieldMap(option_new);
+        console.log("Uploading results With:::" +
+            utils_1.INTEGRATION_TYPE +
+            "::Cloud" +
+            JSON.stringify(option_new));
+        try {
+            // url will not get for qtm4j cloud
+            request(option_new, function requestTO(error, response, body) {
+                if (response && response.body && response.body.trackingId) {
+                    doCloudCall(filePath, response, callback);
+                }
+                else {
+                    callback({
+                        success: false,
+                        errMessage: response.body.errorMessage
+                    });
                 }
             });
         }
@@ -71,7 +112,7 @@ function uploadResults(filePath, callback) {
                             contentType: null
                         }
                     },
-                    entityType: 'QAF'
+                    entityType: 'QAS'
                 }
             };
         }
@@ -90,18 +131,14 @@ function uploadResults(filePath, callback) {
                         options: { filename: path.basename(filePath) }
                     },
                     apiKey: utils_1.API_KEY,
-                    format: 'qas/json',
+                    format: 'qas/json'
                 }
             };
         }
         //options are created, now need to make a call
-        option_new["formData"]["testAssetHierarchy"] = "TestCase-TestStep";
-        option_new["formData"]["testCaseUpdateLevel"] = 1;
+        option_new["formData"]["testAssetHierarchy"] = utils_1.TEST_ASSET_HIERARCHY//"TestCase-TestStep";
+        option_new["formData"]["testCaseUpdateLevel"] = utils_1.TEST_CASE_UPDATE_LEVEL//1;
         option_new = getExtraFieldMap(option_new);
-        console.log("Requesting With:::" +
-            utils_1.INTEGRATION_TYPE +
-            "::Server" +
-            JSON.stringify(option_new));
         try {
             request(option_new, function requestTO(error, response, body) {
                 var end = new Date().getTime();
@@ -127,16 +164,22 @@ function uploadResults(filePath, callback) {
         }
     }
 }
+exports.uploadResults = uploadResults;
 function encodeBase64(username, pwd) {
     return Buffer.from(username + ":" + pwd).toString("base64");
 }
-exports.encodeBase64 = encodeBase64;
 function getExtraFieldMap(option_new) {
-    nonRequiredRequestParam();
-    if (!utils_1.ON_PREMISE && utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j") {
+    if (utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j4x") {
+		nonRequiredRequest4xParam();
+	} else {
+		nonRequiredRequestParam();
+	}
+    if (!utils_1.ON_PREMISE &&
+        utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j" || !utils_1.ON_PREMISE &&
+        utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j4x") {
         Object.keys(exports.extraFieldMap).forEach(function (key) {
             var val = exports.extraFieldMap[key];
-            if (val !== "" && val !== undefined && val !== null && val !== 0) {
+            if (val !== "" && val !== undefined && val !== null && val != 0) {
                 option_new["body"][key] = val;
             }
         });
@@ -144,7 +187,7 @@ function getExtraFieldMap(option_new) {
     else {
         Object.keys(exports.extraFieldMap).forEach(function (key) {
             var val = exports.extraFieldMap[key];
-            if (val !== "" && val !== undefined && val !== null && val !== 0) {
+            if (val !== "" && val !== undefined && val !== null && val != 0) {
                 option_new["formData"][key] = val;
             }
         });
@@ -165,12 +208,10 @@ function doCloudCall(filePath, response, callback) {
         body: fs.readFileSync(filePath)
     };
     try {
-        console.log(" OPTION <<<<<<<<<<<<<<" + JSON.stringify(option_new));
         request(option_new, function requestTO(error, response, body) {
             console.log("response :: %%%%%%%%%%%%%%%" + JSON.stringify(response));
             if (error) {
                 console.log("ERROR :: %%%%%%%%%%%%%%%" + JSON.stringify(error));
-                console.log("IN ERROR ::");
                 callback({ success: false, errMessage: error }); // TODO:
             }
             var end = new Date().getTime();
@@ -187,6 +228,7 @@ function doCloudCall(filePath, response, callback) {
         callback({ success: false, errMessage: e });
     }
 }
+
 function nonRequiredRequestParam() {
     exports.extraFieldMap['testAssetHierarchy'] = utils_1.TEST_ASSET_HIERARCHY;
     exports.extraFieldMap['testCaseUpdateLevel'] = utils_1.TEST_CASE_UPDATE_LEVEL;
@@ -199,9 +241,13 @@ function nonRequiredRequestParam() {
     exports.extraFieldMap["comment"] = utils_1.COMMENT;
     exports.extraFieldMap["testRunKey"] = utils_1.TEST_RUN_KEY;
     exports.extraFieldMap["attachFile"] = utils_1.ATTACH_FILE.toString();
-    if(!utils_1.ON_PREMISE && utils_1.INTEGRATION_TYPE.toString().toLowerCase() === "qtm4j")
-    { exports.extraFieldMap["JIRAFields"] = JSON.parse(utils_1.JIRA_FIELS.toString());
-    }else{exports.extraFieldMap["JIRAFields"] = utils_1.JIRA_FIELS;}
+    exports.extraFieldMap["JIRAFields"] = utils_1.JIRA_FIELS;
+
+    if (!utils_1.ON_PREMISE && utils_1.INTEGRATION_TYPE.toLowerCase() === "qtm4j") {
+        exports.extraFieldMap["JIRAFields"] = JSON.parse(utils_1.JIRA_FIELS.toString());
+    } else {
+        exports.extraFieldMap["JIRAFields"] = utils_1.JIRA_FIELS;
+    }
     exports.extraFieldMap["cycleID"] = utils_1.CYCLE_IDS;
     exports.extraFieldMap["platformID"] = utils_1.PLATFORM_ID;
     exports.extraFieldMap["testsuiteId"] = utils_1.TEST_SUITE_ID;
@@ -210,10 +256,40 @@ function nonRequiredRequestParam() {
     exports.extraFieldMap["buildID"] = utils_1.BUILD_ID;
     exports.extraFieldMap["testsuiteName"] = utils_1.TEST_SUITE_NAME;
 }
+
+
+
+function nonRequiredRequest4xParam() {
+    console.log('utils====>'+JSON.stringify(utils_1));
+	exports.extraFieldMap["testCycleToReuse"] = utils_1.TEST_CYCLE_TO_REUSE;
+	exports.extraFieldMap["environment"] = utils_1.ENVIRONMENT;
+	exports.extraFieldMap["build"] = utils_1.BUILD;
+    exports.extraFieldMap["attachFile"] = utils_1.ATTACH_FILE.toString();
+	exports.extraFieldMap["fields"] = {
+		'testCycle': {
+			'labels': utils_1.TEST_CYCLE_LABELS != '' ? utils_1.TEST_CYCLE_LABELS.split(',') : [],
+			'components': utils_1.TEST_CYCLE_COMPONENTS != '' ? utils_1.TEST_CYCLE_COMPONENTS.split(',') : [],
+			'priority': utils_1.TEST_CYCLE_PRIORITY,
+			'status': utils_1.TEST_CYCLE_STATUS,
+			'sprintId': utils_1.TEST_CYCLE_SPRINTID,
+			'fixVersionId': utils_1.TEST_CYCLE_FIXVERSIONID,
+			'summary': utils_1.TEST_CYCLE_SUMMARY
+		},
+		'testCase': {
+			'labels': utils_1.TEST_CASE_LABELS != '' ? utils_1.TEST_CASE_LABELS.split(',') : [],
+			'components': utils_1.TEST_CASE_COMPONENTS != '' ? utils_1.TEST_CASE_COMPONENTS.split(',') : [],
+			'priority': utils_1.TEST_CASE_PRIORITY,
+			'status': utils_1.TEST_CASE_STATUS,
+			'sprintId': utils_1.TEST_CASE_SPRINTID,
+			'fixVersionId': utils_1.TEST_CASE_FIXVERSIONID
+		}
+	};
+
+}
 function deleteZip(filePath) {
     let isDebug = exports.integrationProperties.get("automation.qmetry.debug");
     if (!isDebug && fs.exists(filePath)) {
-        console.log("deleting Zip success....😲" + filePath);
+        console.log("deleting Zip file...");
         fs.unlinkSync(filePath);
     }
 }
