@@ -12,9 +12,7 @@ Scenario Outline: Web Test case
   When click on "span.span1111"
   And clear "password.qas2019"
   And sendkeys "<Password>" into "password.qas2019"
-  And click on "div.div111_1"
   Then verify "password.qas2019" value is "<Password>"
-  When click on "span.span1111_1"
 
 
 Examples:
