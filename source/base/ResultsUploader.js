@@ -254,38 +254,50 @@ function nonRequiredRequestParam() {
     exports.extraFieldMap["projectID"] = utils_1.PROJECT_ID;
     exports.extraFieldMap["releaseID"] = utils_1.REALEASE_ID;
     exports.extraFieldMap["buildID"] = utils_1.BUILD_ID;
-    exports.extraFieldMap["testsuiteName"] = utils_1.TEST_SUITE_NAME;
+	exports.extraFieldMap["testsuiteName"] = utils_1.TEST_SUITE_NAME;
+	exports.extraFieldMap['testcase_fields'] = utils_1.TEST_CASE_FIELDS;
+	exports.extraFieldMap['testsuite_fields'] = utils_1.TEST_SUITE_FIELDS;
+
+
+	exports.extraFieldMap['testcase_fields'] = exports.extraFieldMap['testcase_fields'].replace(/\"\[/g,'[').replace(/\]"/g,']');
+	exports.extraFieldMap['testsuite_fields'] = exports.extraFieldMap['testsuite_fields'].replace(/\"\[/g,'[').replace(/\]"/g,']');
 }
 
-
+function checkValueIsBankOrNot(val) {
+    if (val !== '' && val !== undefined && val !== null && val !== 0) {
+        return val;
+    }
+    else {
+        return '';
+    }
+}
 
 function nonRequiredRequest4xParam() {
-    console.log('utils====>'+JSON.stringify(utils_1));
-	exports.extraFieldMap["testCycleToReuse"] = utils_1.TEST_CYCLE_TO_REUSE;
-	exports.extraFieldMap["environment"] = utils_1.ENVIRONMENT;
-	exports.extraFieldMap["build"] = utils_1.BUILD;
+    exports.extraFieldMap["testCycleToReuse"] = utils_1.TEST_CYCLE_TO_REUSE;
+    exports.extraFieldMap["environment"] = utils_1.ENVIRONMENT;
+    exports.extraFieldMap["build"] = utils_1.BUILD;
     exports.extraFieldMap["attachFile"] = utils_1.ATTACH_FILE.toString();
-	exports.extraFieldMap["fields"] = {
-		'testCycle': {
-			'labels': utils_1.TEST_CYCLE_LABELS != '' ? utils_1.TEST_CYCLE_LABELS.split(',') : [],
-			'components': utils_1.TEST_CYCLE_COMPONENTS != '' ? utils_1.TEST_CYCLE_COMPONENTS.split(',') : [],
-			'priority': utils_1.TEST_CYCLE_PRIORITY,
-			'status': utils_1.TEST_CYCLE_STATUS,
-			'sprintId': utils_1.TEST_CYCLE_SPRINTID,
-			'fixVersionId': utils_1.TEST_CYCLE_FIXVERSIONID,
-			'summary': utils_1.TEST_CYCLE_SUMMARY
-		},
-		'testCase': {
-			'labels': utils_1.TEST_CASE_LABELS != '' ? utils_1.TEST_CASE_LABELS.split(',') : [],
-			'components': utils_1.TEST_CASE_COMPONENTS != '' ? utils_1.TEST_CASE_COMPONENTS.split(',') : [],
-			'priority': utils_1.TEST_CASE_PRIORITY,
-			'status': utils_1.TEST_CASE_STATUS,
-			'sprintId': utils_1.TEST_CASE_SPRINTID,
-			'fixVersionId': utils_1.TEST_CASE_FIXVERSIONID
-		}
-	};
-
+    exports.extraFieldMap["fields"] = {
+        'testCycle': {
+            'labels': checkValueIsBankOrNot(utils_1.TEST_CYCLE_LABELS) !== '' ? utils_1.TEST_CYCLE_LABELS.split(',') : [],
+            'components': checkValueIsBankOrNot(utils_1.TEST_CYCLE_COMPONENTS) ? utils_1.TEST_CYCLE_COMPONENTS.split(',') : [],
+            'priority': checkValueIsBankOrNot(utils_1.TEST_CYCLE_PRIORITY),
+            'status': checkValueIsBankOrNot(utils_1.TEST_CYCLE_STATUS),
+            'sprintId': checkValueIsBankOrNot(utils_1.TEST_CYCLE_SPRINTID),
+            'fixVersionId': checkValueIsBankOrNot(utils_1.TEST_CYCLE_FIXVERSIONID),
+            'summary': checkValueIsBankOrNot(utils_1.TEST_CYCLE_SUMMARY)
+        },
+        'testCase': {
+            'labels': checkValueIsBankOrNot(utils_1.TEST_CASE_LABELS) !== '' ? utils_1.TEST_CASE_LABELS.split(',') : [],
+            'components': checkValueIsBankOrNot(utils_1.TEST_CASE_COMPONENTS) !== '' ? utils_1.TEST_CASE_COMPONENTS.split(',') : [],
+            'priority': checkValueIsBankOrNot(utils_1.TEST_CASE_PRIORITY),
+            'status': checkValueIsBankOrNot(utils_1.TEST_CASE_STATUS),
+            'sprintId': checkValueIsBankOrNot(utils_1.TEST_CASE_SPRINTID),
+            'fixVersionId': checkValueIsBankOrNot(utils_1.TEST_CASE_FIXVERSIONID)
+        }
+    };
 }
+
 function deleteZip(filePath) {
     let isDebug = exports.integrationProperties.get("automation.qmetry.debug");
     if (!isDebug && fs.exists(filePath)) {
