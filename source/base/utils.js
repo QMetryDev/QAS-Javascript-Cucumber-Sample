@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const configurationmanager_1 = require("./configurationmanager");
+const configurationmanager_1 = require("./ConfigurationManager");
 const fs = require('fs');
 const zip = require('zip-folder');
 let integrationProperties = configurationmanager_1.ConfigurationManager.getBundle();
