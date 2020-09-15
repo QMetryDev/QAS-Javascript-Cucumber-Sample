@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const configurationmanager = require("./configurationmanager");
+const configurationmanager = require("./ConfigurationManager");
 class LocatorUtils {
     getLocator(locator, ...text) {
         let description;

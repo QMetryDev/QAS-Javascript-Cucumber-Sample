@@ -8,7 +8,6 @@ https://nodejs.org/en/download/
 
 2.Chrome or Firefox browsers installed.
 
-
 ```
 npm install
 npm install -g protractor
@@ -22,6 +21,12 @@ npm install -g tsc
 
 ```
 npm run webdriver-update
+```
+
+* If your machine's chrome browser version is not latest one then kindly execute given command
+
+```
+npm run updatechrome
 ```
 
 * Now just run the test command which launches the Chrome Browser and runs the scripts.

@@ -147,10 +147,10 @@ class Reporter {
         let status = "pass";
         let errorTrace = "";
         for (let stepCount in scenario.steps) {
-            if (scenario.steps[stepCount].result.status === "TestStepSkip") {
+            if (scenario.steps[stepCount].result.status === 'TestStepSkip') {
                 status = "skip";
             }
-            if (scenario.steps[stepCount].result.status === "TestStepFail") {
+            if (scenario.steps[stepCount].result.status === 'TestStepFail') {
                 status = "fail";
                 errorTrace = scenario.steps[stepCount].result.error_message;
                 break;
