@@ -8,7 +8,14 @@
             "status": "NotRun",
             "elementKey": "",
             "elementDesc": "",
-            "indexColumn": ""
+            "indexColumn": "",
+            "tcId": 7,
+            "tsId": 5,
+            "testData": true,
+            "tdId": 2,
+            "duration": 7358000000,
+            "errMessage": "",
+            "isRowExpanded": false
         },
         {
             "command": "Clear",
@@ -52,7 +59,13 @@
             "elementKey": "text.txtusername",
             "elementDesc": "Input for txtUsername",
             "indexColumn": "",
-            "tcId": "14"
+            "tcId": 7,
+            "tsId": 5,
+            "testData": true,
+            "tdId": 2,
+            "duration": 586000000,
+            "errMessage": "",
+            "isRowExpanded": false
         },
         {
             "command": "Type",
@@ -95,7 +108,14 @@
             "status": "NotRun",
             "elementKey": "text.txtusername",
             "elementDesc": "Input for txtUsername",
-            "indexColumn": ""
+            "indexColumn": "",
+            "tcId": 7,
+            "tsId": 5,
+            "testData": true,
+            "tdId": 2,
+            "duration": 615000000,
+            "errMessage": "",
+            "isRowExpanded": false
         },
         {
             "command": "Clear",
@@ -135,7 +155,13 @@
             "elementKey": "password.txtpassword",
             "elementDesc": "txtPassword password",
             "indexColumn": "",
-            "tcId": "14"
+            "tcId": 7,
+            "tsId": 5,
+            "testData": true,
+            "tdId": 2,
+            "duration": 638000000,
+            "errMessage": "",
+            "isRowExpanded": false
         },
         {
             "command": "Type",
@@ -174,7 +200,14 @@
             "status": "NotRun",
             "elementKey": "password.txtpassword",
             "elementDesc": "txtPassword password",
-            "indexColumn": ""
+            "indexColumn": "",
+            "tcId": 7,
+            "tsId": 5,
+            "testData": true,
+            "tdId": 2,
+            "duration": 595000000,
+            "errMessage": "",
+            "isRowExpanded": false
         },
         {
             "command": "Click",
@@ -210,10 +243,16 @@
             "elementKey": "button.btnlogin",
             "elementDesc": "BUTTON btnLogin",
             "indexColumn": "",
-            "tcId": "14"
+            "tcId": 7,
+            "tsId": 5,
+            "testData": true,
+            "tdId": 2,
+            "duration": 598000000,
+            "errMessage": "",
+            "isRowExpanded": false
         },
         {
-            "command": "Verify Present",
+            "command": "Verify Visible",
             "element": "button.button",
             "eArray": [
                 [
@@ -231,6 +270,10 @@
                 [
                     "button.button",
                     "key"
+                ],
+                [
+                    "button.logout",
+                    "key"
                 ]
             ],
             "input": "",
@@ -238,7 +281,28 @@
             "elementKey": "button.button",
             "elementDesc": "BUTTON BUTTON",
             "indexColumn": "",
-            "tcId": "14"
+            "tcId": 7,
+            "tsId": 5,
+            "testData": true,
+            "tdId": 2,
+            "duration": 551000000,
+            "errMessage": "",
+            "isRowExpanded": false
+        },
+        {
+            "indexColumn": "",
+            "command": "Click",
+            "element": "button.button",
+            "input": "",
+            "status": "NotRun",
+            "eArray": [
+                [
+                    "button.button",
+                    "key"
+                ]
+            ],
+            "elementKey": "",
+            "elementDesc": ""
         }
     ],
     "type": "web",
@@ -271,5 +335,10 @@
         }
     ],
     "isTCValid": true,
+    "externalTestData": false,
+    "dbDetails": {},
+    "recordSessionType": "multiple",
+    "tags": [],
+    "shared": false,
     "executionStatus": "NotRun"
 }
