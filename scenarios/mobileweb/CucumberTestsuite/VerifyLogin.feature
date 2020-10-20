@@ -14,11 +14,13 @@ Scenario Outline: VerifyLogin
   And sendkeys "<password>" into "password.txtpassword"
   And click on "button.btnlogin"
 
-  # Verify successful login
-  Then verify "button.button" is visible
-
-
+  # verify successful transaction
+  Then verify "div.div" is present
+  
+  # logout
+  And wait until "button.button" to be visible
+  
+  
 Examples:
     |username|password|
     |Bob|Bob|
-    |Sarah|Sarah|
