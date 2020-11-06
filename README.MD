@@ -33,6 +33,10 @@ npm run updatechrome
 ```
 npm run test
 ```
+* To run project using Tags :
+```
+ npm run test -- --cucumberOpts.tags=@tag
+```
 ![result](https://raw.githubusercontent.com/igniteram/protractor-cucumber-typescript/master/images/protractor-cucumber-typescript-result.gif)
 
 #### Writing steps

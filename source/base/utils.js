@@ -45,6 +45,9 @@ exports.TEST_CYCLE_STATUS = integrationProperties.get('automation.qmetry.testcyc
 exports.TEST_CYCLE_SPRINTID = integrationProperties.get('automation.qmetry.testcycle.sprintId') !== null ? integrationProperties.get('automation.qmetry.testcycle.sprintId') : '';
 exports.TEST_CYCLE_FIXVERSIONID = integrationProperties.get('automation.qmetry.testcycle.fixVersionId') !== null ? integrationProperties.get('automation.qmetry.testcycle.fixVersionId') : '';
 exports.TEST_CYCLE_SUMMARY = integrationProperties.get('automation.qmetry.testcycle.summary') !== null ? integrationProperties.get('automation.qmetry.testcycle.summary') : '';
+exports.TEST_CYCLE_DESCRIPTION = integrationProperties.get('automation.qmetry.testcycle.description') !== null ? integrationProperties.get('automation.qmetry.testcycle.description') : '';
+exports.TEST_CYCLE_ASSIGNEE = integrationProperties.get('automation.qmetry.testcycle.assignee') !== null ? integrationProperties.get('automation.qmetry.testcycle.assignee') : '';
+exports.TEST_CYCLE_CUSTOMFIELDS = integrationProperties.get('automation.qmetry.testcycle.customFields') !== null && integrationProperties.get('automation.qmetry.testcycle.customFields') ? integrationProperties.get('automation.qmetry.testcycle.customFields') : '';
 exports.TEST_CASE_LABELS = integrationProperties.get('automation.qmetry.testcase.labels') !== null ? integrationProperties.get('automation.qmetry.testcase.labels') : '';
 exports.TEST_CASE_COMPONENTS = integrationProperties.get('automation.qmetry.testcase.components') !== null ? integrationProperties.get('automation.qmetry.testcase.components') : '';
 exports.TEST_CASE_PRIORITY = integrationProperties.get('automation.qmetry.testcase.priority') !== null ? integrationProperties.get('automation.qmetry.testcase.priority') : '';
@@ -53,6 +56,10 @@ exports.TEST_CASE_SPRINTID = integrationProperties.get('automation.qmetry.testca
 exports.TEST_CASE_FIXVERSIONID = integrationProperties.get('automation.qmetry.testcase.fixVersionId') !== null ? integrationProperties.get('automation.qmetry.testcase.fixVersionId') : '';
 exports.TEST_CASE_FIELDS = integrationProperties.get('automation.qmetry.testcaseFields') !== null ? integrationProperties.get('automation.qmetry.testcaseFields') : '';
 exports.TEST_SUITE_FIELDS = integrationProperties.get('automation.qmetry.testsuiteFields') !== null ? integrationProperties.get('automation.qmetry.testsuiteFields') : '';
+exports.TEST_CASE_DESCRIPTION = integrationProperties.get('automation.qmetry.testcase.description') !== null ? integrationProperties.get('automation.qmetry.testcase.description') : '';
+exports.TEST_CASE_ASSIGNEE = integrationProperties.get('automation.qmetry.testcase.assignee') !== null ? integrationProperties.get('automation.qmetry.testcase.assignee') : '';
+exports.TEST_CASE_CUSTOMFIELDS = integrationProperties.get('automation.qmetry.testcase.customFields') !== null && integrationProperties.get('automation.qmetry.testcase.customFields') ? integrationProperties.get('automation.qmetry.testcase.customFields') : '';
+
 
 
 exports.testResultsPath = './test-results/';

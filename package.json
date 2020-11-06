@@ -20,12 +20,12 @@
   "scripts": {
     "build": "tsc",
     "postinstall": "node_modules/.bin/webdriver-manager update",
-    "test": "protractor config/config.js ",
-    "posttest": "npm run uploadresults",
+    "test": "protractor config/config.js",
+    "posttest":"npm run uploadresults",
     "webdriver-update": "webdriver-manager update",
     "webdriver-start": "webdriver-manager start",
     "uploadresults": "node source/base/ResultsUploader.js",
-    "updatechrome": "node source/base/updatechrome.js"
+    "updatechrome" : "node source/base/updatechrome.js"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
