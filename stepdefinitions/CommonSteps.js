@@ -315,3 +315,20 @@ cucumber_1.defineStep(/wait for "(.*?)" millisec$/, (time) => __awaiter(this, vo
 		throw 'Invalid Input : '+time;
 	}
 }));
+cucumber_1.defineStep(/maximizeWindow "(.*?)"$/, (url) => __awaiter(this, void 0, void 0, function* () {
+    yield protractor_1.browser.driver.manage().window().maximize();
+}));
+cucumber_1.defineStep(/drag "(.*?)" and drop on "(.*?)" perform$/, (source, target) => __awaiter(this, void 0, void 0, function* () {
+
+	protractor_1.browser.actions().dragAndDrop(protractor_1.element(locatorUtil.getLocator(source).locator),protractor_1.element(locatorUtil.getLocator(target).locator)).mouseUp().perform()
+		.then(() => {}).catch(err => {throw err;});
+	// yield protractor_1.browser.driver.actions().mouseDown(protractor_1.element(locatorUtil.getLocator(source).locator)).mouseMove(protractor_1.element(locatorUtil.getLocator(source).locator),protractor_1.element(locatorUtil.getLocator(target).locator)).perform()
+	// 	.then(() => { })
+	// 	.catch(err => {
+	// 		throw err;
+	// 	});
+}));
+cucumber_1.defineStep(/offset drag "(.*?)" and drop on "(.*?)" and "(.*?)"$/, (source, xOffSet, yOffset) => __awaiter(this, void 0, void 0, function* () {
+	protractor_1.browser.actions().dragAndDrop(protractor_1.element(locatorUtil.getLocator(source).locator), { x: parseInt(xOffSet), y: parseInt(yOffset) }).mouseUp().perform()
+		.then(() => { }).catch(err => {throw err;});
+}));
