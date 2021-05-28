@@ -13,20 +13,18 @@ let seleniumAddress = 'http://127.0.0.1:4444/wd/hub';
 const platformProperty = this.properties.get("platform");
 let browserProperty = this.properties.get("driver.name");
 console.log('browserProperty.toLowerCase() : ' + browserProperty.toLowerCase());
-let browserName = browserProperty
-	.replace(new RegExp("Remote"), "")
-	.replace(new RegExp("Driver"), "");
+let browserName = browserProperty.replace(new RegExp("Driver"), "");
 let driverCaps = {};
-driverCaps["browserName"] = browserName;
+let caps = this.properties.get(browserName.toLowerCase() + ".additional.capabilities");
 if (browserProperty.toLowerCase().indexOf("remote") >= 0) {
 	isDIrectConnectSupported = false;
 	seleniumAddress = this.properties.get("remote.server");
+	browserName = caps ? JSON.parse(caps)['browserName'] : "chrome";
 }
-let caps = this.properties.get("remote.additional.capabilities");
-console.log('driver Capabilities : '+JSON.stringify(driverCaps));
 try {
 	if (caps !== null && caps !== undefined) {
 		driverCaps = JSON.parse(caps);
+		driverCaps["browserName"] = browserName;
 	}
 }
 catch (error) {
@@ -36,13 +34,14 @@ catch (error) {
 		".additional.capabilities" +
 		" is not a valid json");
 }
+console.log('driverCaps : ' + JSON.stringify(driverCaps));
 exports.config = {
 	directConnect: isDIrectConnectSupported,
 	// seleniumAddress: "http://127.0.0.1:4444/wd/hub",
 	seleniumAddress: seleniumAddress,
+	capabilities: driverCaps,
 	SELENIUM_PROMISE_MANAGER: false,
 	baseUrl: "https://www.google.com",
-	capabilities: driverCaps,
 	framework: "custom",
 	allScriptsTimeout: 60000,
 	frameworkPath: require.resolve("protractor-cucumber-framework"),
@@ -51,6 +50,7 @@ exports.config = {
 		protractor_1.browser.ignoreSynchronization = true;
 		protractor_1.browser.waitForAngularEnabled(false);
 		// setDefaultTimeout(60 *10);
+		protractor_1.browser.manage().window().maximize();
 		protractor_1.browser
 			.manage()
 			.timeouts()
@@ -58,6 +58,7 @@ exports.config = {
 		// browser.allScriptsTimeout = 60 * 1000;
 		// browser.manage().timeouts().pageLoadTimeout(10000);  // 10 seconds
 		reporter_1.Reporter.createDirectory(jsonReports);
+		global.variableName = "hikumar";
 	},
 	cucumberOpts: {
 		compiler: "ts:ts-node/register",

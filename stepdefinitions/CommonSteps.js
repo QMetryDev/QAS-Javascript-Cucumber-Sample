@@ -135,6 +135,9 @@ cucumber_1.defineStep(/^comment "(.*?)"$/, (value) => __awaiter(this, void 0, vo
 	console.log("Comment ::: " + processValue(value));
 }));
 cucumber_1.defineStep(/Verify title is "(.*?)"$/, (expectedTitle) => __awaiter(this, void 0, void 0, function* () {
+	if (expectedTitle.startsWith("${")) {
+		expectedTitle = properties.get(expectedTitle.substring(2, expectedTitle.length - 1));
+	}
 	yield expect(protractor_1.browser.getTitle()).to.eventually.equal(expectedTitle);
 	// await browser
 	//   .getTitle()
@@ -303,6 +306,9 @@ cucumber_1.defineStep(/verify "(.*?)" text is not "(.*?)"$/, (locator, expectedT
 	});
 });
 cucumber_1.defineStep(/verify link with text "(.*?)" is present$/, (link, callback) => {
+	if (link.startsWith("${")) {
+		link = properties.get(link.substring(2, link.length - 1));
+	}
 	let elmnt = protractor_1.element(protractor_1.by.linkText(link));
 	expect(elmnt.isPresent()).to.eventually.equal(true).and.notify(callback);
 	// ensureElementIsPresent(elmnt).then(() => {
@@ -311,6 +317,9 @@ cucumber_1.defineStep(/verify link with text "(.*?)" is present$/, (link, callba
 	// })
 });
 cucumber_1.defineStep(/verify link with partial text "(.*?)" is present$/, (link, callback) => {
+	if (link.startsWith("${")) {
+		link = properties.get(link.substring(2, link.length - 1));
+	}
 	let elmnt = protractor_1.element(protractor_1.by.partialLinkText(link));
 	expect(elmnt.isPresent()).to.eventually.equal(true).and.notify(callback);
 	// ensureElementIsPresent(elmnt).then(() => {
@@ -347,49 +356,188 @@ cucumber_1.defineStep(/type Enter "(.*?)"$/, (locator) => __awaiter(this, void 0
 		});
 }));
 cucumber_1.defineStep(/close "(.*?)"$/, (url) => __awaiter(this, void 0, void 0, function* () {
-    yield protractor_1.browser.driver.close();
+	yield protractor_1.browser.driver.close();
 }));
 cucumber_1.defineStep(/switchWindow "(.*?)"$/, (index) => __awaiter(this, void 0, void 0, function* () {
-    yield protractor_1.browser.driver.getAllWindowHandles().then((windowArray) => {
-        protractor_1.browser.driver.switchTo().window(windowArray[index]);
-    });
+	yield protractor_1.browser.driver.getAllWindowHandles().then((windowArray) => {
+		protractor_1.browser.driver.switchTo().window(windowArray[index]);
+	});
 }));
 cucumber_1.defineStep(/wait for "(.*?)" millisec$/, (time) => __awaiter(this, void 0, void 0, function* () {
-	if(time && /^[0-9]*$/mg.test(time.trim())){
-		yield protractor_1.browser.driver.sleep(time).then(() => { }).catch(err => {throw err;});
-	}else{
-		throw 'Invalid Input : '+time;
+	if (time && /^[0-9]*$/mg.test(time.trim())) {
+		yield protractor_1.browser.driver.sleep(time).then(() => { }).catch(err => { throw err; });
+	} else {
+		throw 'Invalid Input : ' + time;
 	}
 }));
 cucumber_1.defineStep(/maximizeWindow "(.*?)"$/, (url) => __awaiter(this, void 0, void 0, function* () {
-    yield protractor_1.browser.driver.manage().window().maximize();
+	yield protractor_1.browser.driver.manage().window().maximize();
 }));
 
 cucumber_1.defineStep(/drag "(.*?)" and drop on "(.*?)" perform$/, (source, target) => __awaiter(this, void 0, void 0, function* () {
 	// protractor_1.browser.actions().dragAndDrop(protractor_1.element(locatorUtil.getLocator(source).locator), protractor_1.element(locatorUtil.getLocator(target).locator)).mouseUp().perform()
 	// 	.then(() => { }).catch(err => { throw err; });
 	yield protractor_1.browser.executeScript(jsScript() + "simulateDragDrop(arguments[0], arguments[1])", protractor_1.element(locatorUtil.getLocator(source).locator), protractor_1.element(locatorUtil.getLocator(target).locator))
-	.then(() => { })
-	.catch(err => {
-		throw err;
-	});
-	yield protractor_1.browser.driver.actions().mouseDown(protractor_1.element(locatorUtil.getLocator(source).locator)).mouseMove(protractor_1.element(locatorUtil.getLocator(source).locator),protractor_1.element(locatorUtil.getLocator(target).locator)).mouseUp().perform()
-	.then(() => { })
-	.catch(err => {
-		throw err;
-	});
+		.then(() => { })
+		.catch(err => {
+			throw err;
+		});
+	yield protractor_1.browser.driver.actions().mouseDown(protractor_1.element(locatorUtil.getLocator(source).locator)).mouseMove(protractor_1.element(locatorUtil.getLocator(source).locator), protractor_1.element(locatorUtil.getLocator(target).locator)).mouseUp().perform()
+		.then(() => { })
+		.catch(err => {
+			throw err;
+		});
 }));
 cucumber_1.defineStep(/drag "(.*?)" and drop on value "(.*?)" perform$/, (source, jsvalue) => __awaiter(this, void 0, void 0, function* () {
 	// protractor_1.browser.actions().dragAndDrop(protractor_1.element(locatorUtil.getLocator(source).locator), protractor_1.element(locatorUtil.getLocator(target).locator)).mouseUp().perform()
 	// 	.then(() => { }).catch(err => { throw err; });
-	let jsValueScript ="arguments[0].setAttribute('value',"+jsvalue+");if(typeof(arguments[0].onchange) === 'function'){arguments[0].onchange('');}";
+	let jsValueScript = "arguments[0].setAttribute('value'," + jsvalue + ");if(typeof(arguments[0].onchange) === 'function'){arguments[0].onchange('');}";
 	yield protractor_1.browser.executeScript(jsValueScript, protractor_1.element(locatorUtil.getLocator(source).locator))
-	.then(() => { })
-	.catch(err => {
-		throw err;
-	});
+		.then(() => { })
+		.catch(err => {
+			throw err;
+		});
 }));
 cucumber_1.defineStep(/offset drag "(.*?)" and drop on "(.*?)" and "(.*?)"$/, (source, xOffSet, yOffset) => __awaiter(this, void 0, void 0, function* () {
-	yield protractor_1.browser.actions().dragAndDrop(yield protractor_1.element(locatorUtil.getLocator(source).locator),{x: parseInt(xOffSet), y: parseInt(yOffset)}).mouseUp().perform()
+	yield protractor_1.browser.actions().dragAndDrop(yield protractor_1.element(locatorUtil.getLocator(source).locator), { x: parseInt(xOffSet), y: parseInt(yOffset) }).mouseUp().perform()
 		.then(() => { }).catch(err => { throw err; });
 }));
+cucumber_1.defineStep(/waitForAlert "(.*?)" millisec$/, (time) => __awaiter(this, void 0, void 0, function* () {
+	if (time && /^[0-9]*$/mg.test(time.trim())) {
+		var timeout = +time.trim();
+		yield protractor_1.browser.driver.wait(protractor_1.until.alertIsPresent(), timeout).then(function () {
+		});
+	} else {
+		throw 'Invalid Input : ' + time;
+	}
+}));
+cucumber_1.defineStep(/dismissAlert "(.*?)"$/, (time) => __awaiter(this, void 0, void 0, function* () {
+	yield protractor_1.browser.driver.switchTo().alert().dismiss();
+}));
+cucumber_1.defineStep(/acceptAlert "(.*?)"$/, (url) => __awaiter(this, void 0, void 0, function* () {
+	yield protractor_1.browser.driver.switchTo().alert().accept();
+}));
+cucumber_1.defineStep(/getAlertText "(.*?)"$/, (time) => __awaiter(this, void 0, void 0, function* () {
+	yield protractor_1.browser.driver.switchTo().alert().getText();
+}));
+cucumber_1.defineStep(/setAlertText "(.*?)"$/, (text) => __awaiter(this, void 0, void 0, function* () {
+	yield protractor_1.browser.driver.switchTo().alert().sendKeys(text);
+}));
+
+cucumber_1.defineStep(/verifyAlertNotPresent "(.*?)" millisec$/, (time) => __awaiter(this, void 0, void 0, function* () {
+	if (time && /^[0-9]*$/mg.test(time.trim())) {
+		var timeout = +time.trim();
+		return new Promise((resolve, reject) => {
+			protractor_1.browser.driver.wait(protractor_1.until.alertIsPresent(), timeout)
+				.then(isVisible => {
+					if (isVisible) {
+						reject(new Error("Alert is present"));
+					}
+					else {
+						chai.assert(true, "Alert is not present");
+						resolve();
+					}
+				})
+				.catch(err => {
+					callback(err);
+				});
+
+		});
+	}
+}));
+
+cucumber_1.defineStep(/verifyAlertPresent "(.*?)" millisec$/, (time) => __awaiter(this, void 0, void 0, function* () {
+	if (time && /^[0-9]*$/mg.test(time.trim())) {
+		var timeout = +time.trim();
+		yield protractor_1.browser.driver.wait(protractor_1.until.alertIsPresent(), timeout).then(function () {
+		}).catch(err => {
+			throw 'Alert is not present. ' + err;
+		});
+	} else {
+		chai.assert(false, "Alert is not present");
+	}
+}));
+cucumber_1.defineStep(/executeJavaScript "(.*?)"$/, (jsScriptinput) => __awaiter(this, void 0, void 0, function* () {
+	yield protractor_1.browser.executeScript(jsScriptinput)
+		.then(() => { })
+		.catch(err => {
+			throw err;
+		});
+}));
+cucumber_1.defineStep(/executeAsyncJavaScript "(.*?)"$/, (jsScriptinput) => __awaiter(this, void 0, void 0, function* () {
+	yield protractor_1.browser.executeAsyncScript(jsScriptinput)
+		.then(() => { })
+		.catch(err => {
+			throw err;
+		});
+}));
+cucumber_1.defineStep(/store value from "(.*?)" into "(.*?)"$/, (locator, varKey) => __awaiter(this, void 0, void 0, function* () {
+	// properties.set("storeKey","storeVal");	properties.get("storeKey"); //import {config} from '../config/config';config[storeVar];
+	properties.set(varKey, yield protractor_1.element(locatorUtil.getLocator(locator).locator).getAttribute('value'));
+}));
+cucumber_1.defineStep(/store text from "(.*?)" into "(.*?)"$/, (locator, varKey) => __awaiter(this, void 0, void 0, function* () {
+	properties.set(varKey, yield protractor_1.element(locatorUtil.getLocator(locator).locator).getText());
+}));
+cucumber_1.defineStep(/store title into "(.*?)"$/, (varKey) => __awaiter(this, void 0, void 0, function* () {
+	properties.set(varKey, yield protractor_1.browser.driver.getTitle())
+}));
+cucumber_1.defineStep(/verify "(.*?)" is selected$/, (locator, callback) => {
+	protractor_1.element(locatorUtil.getLocator(locator).locator)
+		.isPresent()
+		.then(isPresent => {
+			if (isPresent) {
+				try {
+					protractor_1.element(locatorUtil.getLocator(locator).locator)
+						.isSelected()
+						.then(function (isSelected) {
+							if (isSelected) {
+								chai.assert(true, "Element is selected");
+								callback();
+							}
+							else {
+								chai.assert(false, "Element is not selected");
+								callback(new Error("Element is not selected"));
+							}
+						})
+						.catch(err => {
+							callback(err);
+						});
+				}
+				catch (error) {
+					callback(error);
+				}
+			}
+
+		})
+		.catch((err) => {
+			chai.assert(false, "Element is not present");
+			callback(err);
+		});
+});
+cucumber_1.defineStep(/verify "(.*?)" is not selected$/, (locator, callback) => {
+	let elmnt = protractor_1.element(locatorUtil.getLocator(locator).locator);
+	ensureElementIsPresent(elmnt).then(() => {
+		try {
+			protractor_1.element(locatorUtil.getLocator(locator).locator)
+				.isSelected()
+				.then(isSelected => {
+					if (isSelected) {
+						chai.assert(false, "Element is selected");
+						callback(new Error("Element is selected"));
+					}
+					else {
+						chai.assert(true, "Element is not selected");
+						callback();
+					}
+				})
+				.catch(err => {
+					callback(err);
+				});
+		}
+		catch (error) {
+			callback(error);
+		}
+	}).catch((err) => {
+		callback(err);
+	});
+});
