@@ -417,8 +417,8 @@ cucumber_1.defineStep(/dismissAlert "(.*?)"$/, (time) => __awaiter(this, void 0,
 cucumber_1.defineStep(/acceptAlert "(.*?)"$/, (url) => __awaiter(this, void 0, void 0, function* () {
 	yield protractor_1.browser.driver.switchTo().alert().accept();
 }));
-cucumber_1.defineStep(/getAlertText "(.*?)"$/, (time) => __awaiter(this, void 0, void 0, function* () {
-	yield protractor_1.browser.driver.switchTo().alert().getText();
+cucumber_1.defineStep(/getAlertText "(.*?)"$/, (input) => __awaiter(this, void 0, void 0, function* () {
+	properties.set(input, yield protractor_1.browser.driver.switchTo().alert().getText());
 }));
 cucumber_1.defineStep(/setAlertText "(.*?)"$/, (text) => __awaiter(this, void 0, void 0, function* () {
 	yield protractor_1.browser.driver.switchTo().alert().sendKeys(text);
@@ -541,3 +541,16 @@ cucumber_1.defineStep(/verify "(.*?)" is not selected$/, (locator, callback) => 
 		callback(err);
 	});
 });
+
+cucumber_1.defineStep(/sendEncryptedKeys "(.*?)" into "(.*?)"$/, (text, locator) => __awaiter(this, void 0, void 0, function* () {
+	text = Buffer.from(text, "base64").toString("ascii");
+	if (text.startsWith("${")) {
+		text = properties.get(text.substring(2, text.length - 1));
+	}
+	yield protractor_1.element(locatorUtil.getLocator(locator).locator)
+		.sendKeys(text)
+		.then(() => { })
+		.catch(err => {
+			throw err;
+		});
+}));
